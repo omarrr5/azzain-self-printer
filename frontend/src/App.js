@@ -1,12 +1,10 @@
 import './App.css';
-import BackgroundAnimation from './components/BackgroundAnimation';
-import Overlay from './components/Overlay';
+import Home from './views/Home';
 
 function App() {
   return (
     <div className="App">
-      <BackgroundAnimation/>
-      <Overlay/>
+      <Home/>
     </div>
   );
 }
