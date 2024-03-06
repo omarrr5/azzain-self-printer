@@ -31,6 +31,7 @@ const Home = () => {
               <div className="modal-content">
                 <span className="close" onClick={handleCloseModal}>&times;</span>
                 <QRCode value="https://example.com" bgColor="#f5f5f5" fgColor="#00b4ff" />
+                <h2>Scan The QR Code To Upload Your Documents</h2>
               </div>
             </div>
           )}

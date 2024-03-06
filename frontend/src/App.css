@@ -399,6 +399,23 @@ button:hover::after, button:focus::after {
   position: relative;
 }
 
+.modal-content h2 {
+  color: #00b4ff; 
+  animation: colorChange 10s infinite alternate; 
+}
+
+@keyframes colorChange {
+  0% {
+    color: #00b4ff; 
+  }
+  50% {
+    color: #ff00b4; 
+  }
+  100% {
+    color: #00b4ff; 
+  }
+}
+
 .close {
   color: #ff6fbd;
   float: right;
