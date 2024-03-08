@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
-import BackgroundAnimation from '../components/BackgroundAnimation'
+import axiosClient from "../axios-client.js";
+import {createRef} from "react";
+import {useStateContext} from "../contexts/ContextProvider.jsx";
+import {useState} from "react";
+import BackgroundAnimation from "../components/BackgroundAnimation.jsx";
+
 
 const Login = () => {
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState(null)
+  const { setUser, setToken } = useStateContext();
+  const [message, setMessage] = useState(null);
+  const nameRef = createRef();
+  const passwordRef = createRef();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Username:', username);
-    console.log('Password:', password);
-    setUsername('');
-    setPassword('');
-  };
+  const handleSubmit = ev => {
+    ev.preventDefault()
 
+    const payload = {
+      username: nameRef.current.value,
+      password: passwordRef.current.value,
+    }
+    axiosClient.post('/login', payload)
+      .then(({data}) => {
+        setUser(data.user)
+        setToken(data.token);
+      })
+      .catch((err) => {
+        const response = err.response;
+        if (response && response.status === 422) {
+          setMessage(response.data.message)
+        }
+      }) 
+  }
 
   return (
     <div>
@@ -26,9 +42,7 @@ const Login = () => {
             <label htmlFor="username">Username</label>
             <input
               type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              ref={nameRef}
               required
             />
           </div>
@@ -36,9 +50,7 @@ const Login = () => {
             <label htmlFor="password">Password</label>
             <input
               type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              ref={passwordRef}
               required
             />
           </div>
