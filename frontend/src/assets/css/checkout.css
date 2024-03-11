@@ -1,0 +1,204 @@
+@use postcss-preset-env {
+    stage: 0;
+  }
+  
+  :root {
+    --color-background: #fae3ea;
+    --color-primary: #fc8080;
+    --font-family-base: Poppin, sans-serif;
+    --font-size-h1: 1.25rem;
+    --font-size-h2: 1rem;
+  }
+  
+  * {
+    font-family: var(--font-family-base);
+    box-sizing: inherit;
+  }
+  
+  html {
+    box-sizing: border-box;
+  }
+  
+
+  .checkout-container {
+    position: relative;
+  }
+
+  .background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+  }
+
+
+  button {
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+  }
+  
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    font-size: var(--font-size-h1);
+    line-height: 1.2;
+    margin-block: 0 1.5em;
+  }
+  
+  h2 {
+    font-size: var(--font-size-h2);
+    line-height: 1.2;
+    margin-block: 0 0.5em;
+  }
+  
+  legend {
+    font-weight: 600;
+    margin-block-end: 0.5em;
+    padding: 0;
+  }
+  
+  input {
+    border: 0;
+    color: inherit;
+    font: inherit;
+  }
+  
+  input[type="radio"] {
+    accent-color: var(--color-primary);
+  }
+  
+  table {
+    border-collapse: collapse;
+    inline-size: 100%;
+  }
+  
+  tbody {
+    color: #ffffffba;
+  }
+  
+  td {
+    padding-block: 0.125em;
+    color: black;
+  }
+
+  
+  
+  tfoot {
+    border-top: 1px solid #000000ba;
+    font-weight: 600;
+  }
+  
+  .align {
+    display: grid;
+    place-items: center;
+  }
+  
+  .pay-button {
+    align-items: center;
+    background-color: var(--color-primary);
+    border-radius: 999em;
+    color: #fff;
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+    padding-block: 0.75em;
+    padding-inline: 1em;
+    transition: 0.3s;
+  }
+  
+  .pay-button:focus,
+  .pay-button:hover {
+    background-color: #e96363;
+  }
+  
+  .button--full {
+    inline-size: 100%;
+  }
+  
+  .card {
+    border-radius: 1em;
+    background-color: #ffffffba;
+    color: #fff;
+    padding: 1em;
+  }
+  
+  .form {
+    display: grid;
+    gap: 2em;
+  }
+  
+  .form__radios {
+    display: grid;
+    gap: 1em;
+  }
+  
+  .form__radio {
+    align-items: center;
+    background-color: #fefdfe;
+    border-radius: 1em;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+    display: flex;
+    padding: 1em;
+  }
+  
+  .form__radio label {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    gap: 1em;
+  }
+  
+  .form__radio img {
+    padding-top: 5px;
+    width: 40px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: center;
+    padding-block: 0.5em;
+    padding-inline: 1em;
+  }
+  
+  .icon {
+    block-size: 1em;
+    display: inline-block;
+    fill: currentColor;
+    inline-size: 1em;
+    vertical-align: middle;
+  }
+  
+  .iphone {
+    position: relative; 
+    background-color: #ffffffba;
+    box-shadow: 0px 25px 40px #1687d933;
+    border-radius: 2em;
+    height: 660px;
+    width: 375px;
+    overflow: hidden;
+    padding: 2em;
+    margin: 2em auto 0; 
+}
+  
+  @media (max-width: 768px) {
+    .iphone {
+      height: 80%; 
+      width: 80%; 
+      max-width: 375px; 
+      max-height: 660px; 
+    }
+  }
+  
+  span {
+    font-weight: 800;
+    color: #28976e;
+  }
+  

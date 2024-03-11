@@ -7,6 +7,7 @@ import NotFound from "./views/NotFound";
 import Order from "./views/Order";
 import Signup from "./views/Signup";
 import Upload from "./views/Upload";
+import Checkout from "./views/Checkout";
 
 
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         {
           path: '/upload',
           element: <Upload/>
+        },
+        {
+          path: '/checkout',
+          element: <Checkout/>
         }
     ],
   },
