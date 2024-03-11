@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import trash from '../assets/trash.png';
 
+
 const MultiFileUpload = () => {
   const [files, setFiles] = useState([]);
 
@@ -20,9 +21,16 @@ const MultiFileUpload = () => {
     return `${parseFloat((size / Math.pow(1024, i)).toFixed(2))} ${units[i]}`;
   };
 
+  const uploadFiles = () => {
+    // Implement your file upload logic here
+    // For example, you can use Axios to upload files to a server
+    console.log('Uploading files:', files);
+  };
+
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  return (
+  return (    
     <div>
       <div {...getRootProps()} className="dropzone">
         <input {...getInputProps()} />
@@ -46,6 +54,9 @@ const MultiFileUpload = () => {
               </button>
             </div>
           ))}
+            <button className="upload-button" onClick={uploadFiles}>
+                    Upload Files
+            </button>
         </div>
       )}
     </div>
