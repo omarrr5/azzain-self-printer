@@ -191,7 +191,7 @@
   @media (max-width: 768px) {
     .iphone {
       height: 80%; 
-      width: 80%; 
+      width: 90%; 
       max-width: 375px; 
       max-height: 660px; 
     }
