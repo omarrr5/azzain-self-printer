@@ -1192,8 +1192,6 @@ select {
   font-weight: bold;
 }
 
-
-
 .modal {
   position: fixed;
   top: 0;
@@ -1208,7 +1206,6 @@ select {
 }
 
 .upload-container {
-  background-color: #0056b3;
   position: relative;
 }
 
@@ -1246,6 +1243,10 @@ select {
   margin: 0;
 }
 
+.dropzone img{
+  width: 50px;
+}
+
 .file-list {
   font-family: sans-serif;
   margin-top: 20px;
@@ -1271,12 +1272,15 @@ select {
   margin-right: 10px;
 }
 
-.delete-button img{
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  padding: 20px 10px;
+.delete-button {
+  border: none;
   cursor: pointer;
+  padding: 20px 10px;
+}
+
+.delete-button img {
+  width: 25px; 
+  height: 25px;
 }
 
 .upload-button {
