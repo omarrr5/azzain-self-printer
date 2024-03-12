@@ -8,7 +8,7 @@ import Order from "./views/Order";
 import Signup from "./views/Signup";
 import Upload from "./views/Upload";
 import Checkout from "./views/Checkout";
-
+import Print from "./views/Print";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +34,11 @@ const router = createBrowserRouter([
         {
           path: '/checkout',
           element: <Checkout/>
-        }
+        },
+       {
+        path: '/print',
+        element: <Print/>
+       }
     ],
   },
 

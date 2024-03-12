@@ -3,6 +3,8 @@ import '../assets/css/checkout.css';
 import grab from '../assets/grab-logo.svg';
 import tng from '../assets/tng.png';
 import duit from '../assets/duit-now.png';
+import shopee from '../assets/shopee.jpeg';
+import boost from '../assets/boost.png';
 import BackgroundAnimation from '../components/BackgroundAnimation';
 
 function Checkout() {
@@ -30,6 +32,13 @@ function Checkout() {
                   TNG
                 </label>
                 <input id="tng" name="payment-method" type="radio" />
+              </div>
+              <div className="form__radio">
+                <label htmlFor="shopee">
+                  <img src={shopee} alt="shopee" />
+                  Shopee Pay
+                </label>
+                <input id="shopee" name="payment-method" type="radio" />
               </div>
               <div className="form__radio">
                 <label htmlFor="duit">
