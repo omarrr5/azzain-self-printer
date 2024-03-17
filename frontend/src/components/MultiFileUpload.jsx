@@ -2,6 +2,8 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import trash from '../assets/trash.png';
 import fileIcon from '../assets/file.png';
+import axiosClient from '../axios-client.js';
+
 
 const MultiFileUpload = () => {
   const [files, setFiles] = useState([]);
@@ -22,9 +24,23 @@ const MultiFileUpload = () => {
   };
 
   const uploadFiles = () => {
-    // Implement your file upload logic here
-    // For example, you can use Axios to upload files to a server
-    console.log('Uploading files:', files);
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files[]", file);
+    });
+
+    axiosClient.post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("Files uploaded successfully:", response.data);
+        setFiles([]);
+      })
+      .catch((error) => {
+        console.error("Error uploading files:", error);
+      });
   };
 
 
