@@ -25,3 +25,12 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/upload', [FileUploadController::class, 'upload']);
 Route::get('/uploaded-documents', [FileUploadController::class, 'getUploadedDocuments']);
+
+Route::get('/pdf/{fileName}', function ($fileName) {
+    $filePath = storage_path('app/uploads/' . $fileName);
+    if (file_exists($filePath)) {
+        return response()->file($filePath);
+    } else {
+        return response()->json(['error' => 'File not found'], 404);
+    }
+});
