@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Storage;
 
+
 class FileUploadController extends Controller
 {
     public function upload(Request $request)
     {
         if ($request->hasFile('files')) {
             $uploadedFiles = [];
+            $counter = 1; // 
             foreach ($request->file('files') as $file) {
-                $path = $file->store('uploads');
+                $customFileName = 'Azzain_Document_' . $counter++ . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('uploads', $customFileName);
                 $uploadedFiles[] = [
-                    'name' => $file->getClientOriginalName(),
+                    'name' => $customFileName,
                     'path' => $path
                 ];
             }
@@ -23,6 +26,7 @@ class FileUploadController extends Controller
             return response()->json(['error' => 'No files were uploaded'], 400);
         }
     }
+    
 
     public function getUploadedDocuments()
     {
