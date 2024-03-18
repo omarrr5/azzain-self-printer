@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react';
 import axiosClient from '../axios-client';
 
 const PDFViewer = ({ documentFileName }) => {
-  const [pdfUrl, setPdfUrl] = useState('');
+  const [fileType, setFileType] = useState('');
+  const [fileUrl, setFileUrl] = useState('');
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axiosClient.get(`/pdf/${documentFileName}`, {
-      responseType: 'blob',
-    })
-    .then(response => {
-      const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
-      const url = URL.createObjectURL(pdfBlob);
-      setPdfUrl(url);
-    })
-    .catch(error => {
-      console.error('Error fetching PDF:', error);
-      setError(error);
-    });
+    axiosClient.get(`/pdf/${documentFileName}`, { responseType: 'blob' })
+      .then(response => {
+        const contentType = response.headers['content-type'];
+        setFileType(contentType);
+        const fileBlob = new Blob([response.data], { type: contentType });
+        const url = URL.createObjectURL(fileBlob);
+        setFileUrl(url);
+      })
+      .catch(error => {
+        console.error('Error fetching file:', error);
+        setError(error);
+      });
   }, [documentFileName]);
 
   const handleContextMenu = event => {
@@ -30,13 +31,17 @@ const PDFViewer = ({ documentFileName }) => {
 
   return (
     <div>
-      {pdfUrl && (
+      {fileType.startsWith('image/') ? ( 
+        <img src={fileUrl} alt="Document" style={{ maxWidth: '100%', height: 'auto' }} />
+      ) : (
         <iframe
-        src={pdfUrl + "#toolbar=0"}
-        height="600px"
-        width= "100%"
-        onContextMenu={handleContextMenu}
-      />
+          src={`${fileUrl}#toolbar=0`}
+          width="100%"
+          height="600px"
+          title="PDF Viewer"
+          frameBorder="0"
+          onContextMenu={handleContextMenu} 
+        />
       )}
     </div>
   );
