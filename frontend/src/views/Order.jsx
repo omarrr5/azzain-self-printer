@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import BackgroundAnimation from '../components/BackgroundAnimation';
 import Modal from '../Modal';
 import axiosClient from '../axios-client';
-import logo from '../assets/logo.png';
 import deleteBTn from '../assets/trash.png';
 import cancelBtn from '../assets/cancel.png';
 import next from '../assets/next.png';
-import PDFViewer from '../components/PDFViewer';
+import logo from '../assets/logo.png';
 
 const Order = () => {
   const [uploadedDocuments, setUploadedDocuments] = useState([]);
-  const [selectedDocumentUrl, setSelectedDocumentUrl] = useState(null);
+  const [selectedDocument, setSelectedDocument] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -23,17 +22,15 @@ const Order = () => {
       });
   }, []);
 
-  const handleDocumentClick = (documentUrl) => {
-    setSelectedDocumentUrl(documentUrl);
+  const handleDocumentClick = (document) => {
+    setSelectedDocument(document);
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
-    setSelectedDocumentUrl(null);
+    setSelectedDocument(null);
     setShowModal(false);
   };
-
-
 
   return (
     <div>
@@ -46,8 +43,8 @@ const Order = () => {
           </div>
           {uploadedDocuments.map((document, index) => (
             <div key={index} className="Cart-Items">
-              <div className="image-box" onClick={() => handleDocumentClick(document.url)}>
-                <img  style={{ height: "100px" }} alt="item" />
+              <div className="image-box" onClick={() => handleDocumentClick(document)}>
+                <img src={logo} style={{ height: "100px" }} alt="item" />
               </div>
               <div className="about">
                 <h1 className="item-title">{document.name}</h1>
@@ -67,10 +64,9 @@ const Order = () => {
           ))}
         </div>
 
+
         {showModal && (
-          <Modal closeModal={handleCloseModal}>
-            <PDFViewer documentUrl={selectedDocumentUrl} />
-          </Modal>
+          <Modal closeModal={handleCloseModal} documentFileName={selectedDocument.name} />
         )}
 
         <div className='options-container'>
