@@ -19,7 +19,7 @@ const Order = () => {
         setUploadedDocuments(response.data.documents);
         const initialCounts = {};
         response.data.documents.forEach(document => {
-          initialCounts[document.id] = 1;
+          initialCounts[document.name] = 1;
         });
         setCounts(initialCounts);
       })
@@ -70,12 +70,12 @@ const Order = () => {
                 <h1 className="item-title">{document.name}</h1>
               </div>
               <div className="counter">
-                <div className="btn" onClick={() => decrementCount(document.id)}>-</div>
-                <div className="count">{counts[document.id]}</div>
-                <div className="btn" onClick={() => incrementCount(document.id)}>+</div>
+                <div className="btn" onClick={() => decrementCount(document.name)}>-</div>
+                <div className="count">{counts[document.name]}</div>
+                <div className="btn" onClick={() => incrementCount(document.name)}>+</div>
               </div>
               <div className="prices">
-                <div className="amount">RM {(counts[document.id] * 0.15).toFixed(2)}</div>
+                <div className="amount">RM {(counts[document.name] * 0.15).toFixed(2)}</div>
                 <div className="remove">
                   <button><img src={deleteBtn} alt="delete button" /></button>
                 </div>
