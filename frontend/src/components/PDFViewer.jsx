@@ -14,7 +14,7 @@ const PDFViewer = ({ documentFileName }) => {
         const fileBlob = new Blob([response.data], { type: contentType });
         const url = URL.createObjectURL(fileBlob);
         setFileUrl(url);
-      })
+      })  
       .catch(error => {
         console.error('Error fetching file:', error);
         setError(error);

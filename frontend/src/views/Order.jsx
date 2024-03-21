@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BackgroundAnimation from '../components/BackgroundAnimation';
 import Modal from '../Modal';
 import axiosClient from '../axios-client';
-import deleteBTn from '../assets/trash.png';
+import deleteBtn from '../assets/trash.png';
 import cancelBtn from '../assets/cancel.png';
 import next from '../assets/next.png';
 import logo from '../assets/logo.png';
@@ -11,11 +11,17 @@ const Order = () => {
   const [uploadedDocuments, setUploadedDocuments] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [counts, setCounts] = useState({}); 
 
   useEffect(() => {
     axiosClient.get('/uploaded-documents')
       .then(response => {
         setUploadedDocuments(response.data.documents);
+        const initialCounts = {};
+        response.data.documents.forEach(document => {
+          initialCounts[document.id] = 1;
+        });
+        setCounts(initialCounts);
       })
       .catch(error => {
         console.error('Error fetching uploaded documents:', error);
@@ -30,6 +36,20 @@ const Order = () => {
   const handleCloseModal = () => {
     setSelectedDocument(null);
     setShowModal(false);
+  };
+
+  const decrementCount = (documentId) => {
+    setCounts(prevCounts => ({
+      ...prevCounts,
+      [documentId]: Math.max(prevCounts[documentId] - 1, 1),
+    }));
+  };
+
+  const incrementCount = (documentId) => {
+    setCounts(prevCounts => ({
+      ...prevCounts,
+      [documentId]: prevCounts[documentId] ? prevCounts[documentId] + 1 : 1,
+    }));
   };
 
   return (
@@ -50,27 +70,26 @@ const Order = () => {
                 <h1 className="item-title">{document.name}</h1>
               </div>
               <div className="counter">
-                <div className="btn">-</div>
-                <div className="count">2</div>
-                <div className="btn">+</div>
+                <div className="btn" onClick={() => decrementCount(document.id)}>-</div>
+                <div className="count">{counts[document.id]}</div>
+                <div className="btn" onClick={() => incrementCount(document.id)}>+</div>
               </div>
               <div className="prices">
-                <div className="amount">RM 0.15</div>
+                <div className="amount">RM {(counts[document.id] * 0.15).toFixed(2)}</div>
                 <div className="remove">
-                  <button><img src={deleteBTn} alt="delete button" /></button>
+                  <button><img src={deleteBtn} alt="delete button" /></button>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-
         {showModal && (
           <Modal closeModal={handleCloseModal} documentFileName={selectedDocument.name} />
         )}
 
         <div className='options-container'>
-          <div className='label-select-container'>
+        <div className='label-select-container'>
             <label htmlFor="color-option">Color option</label>
             <select id="color-option" name="color-option">
               <option value="bw">Black and White</option>
@@ -93,9 +112,9 @@ const Order = () => {
             <div className="total">
               <div>
                 <div className="Subtotal">Sub-Total</div>
-                <div className="items">2 items</div>
+                <div className="items">{uploadedDocuments.length} items</div>
               </div>
-              <div className="total-amount">RM 6.18</div>
+              <div className="total-amount">RM {Object.values(counts).reduce((acc, count) => acc + count * 0.15, 0).toFixed(2)}</div>
             </div>
             <button className="checkout-button">
               <img src={next} alt="checkout button" />
