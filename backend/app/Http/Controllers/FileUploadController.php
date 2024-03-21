@@ -45,4 +45,16 @@ class FileUploadController extends Controller
         return response()->json(['documents' => $uploadedDocuments]);
     }
 
+    public function deleteDocument($document)
+{
+    $filePath = 'uploads/' . $document;
+
+    if (Storage::exists($filePath)) {
+        Storage::delete($filePath);
+        return response()->json(['message' => 'Document deleted successfully'], 200);
+    } else {
+        return response()->json(['error' => 'Document not found'], 404);
+    }
+}
+
 }

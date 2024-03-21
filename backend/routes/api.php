@@ -34,3 +34,4 @@ Route::get('/pdf/{fileName}', function ($fileName) {
         return response()->json(['error' => 'File not found'], 404);
     }
 });
+Route::delete('/uploaded-documents/{document}', [FileUploadController::class, 'deleteDocument']);

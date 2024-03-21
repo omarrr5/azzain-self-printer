@@ -52,6 +52,23 @@ const Order = () => {
     }));
   };
 
+
+  const deleteDocument = (documentName) => {
+    axiosClient.delete(`/uploaded-documents/${documentName}`)
+      .then(() => {
+        const updatedDocuments = uploadedDocuments.filter(doc => doc.name !== documentName);
+        setUploadedDocuments(updatedDocuments);
+        setCounts(prevCounts => {
+          const newCounts = { ...prevCounts };
+          delete newCounts[documentName];
+          return newCounts;
+        });
+      })
+      .catch(error => {
+        console.error('Error deleting document:', error);
+      });
+  };
+
   return (
     <div>
       <BackgroundAnimation/>
@@ -77,7 +94,7 @@ const Order = () => {
               <div className="prices">
                 <div className="amount">RM {(counts[document.name] * 0.15).toFixed(2)}</div>
                 <div className="remove">
-                  <button><img src={deleteBtn} alt="delete button" /></button>
+                  <button onClick={() => deleteDocument(document.name)}><img src={deleteBtn} alt="delete button" /></button>
                 </div>
               </div>
             </div>
