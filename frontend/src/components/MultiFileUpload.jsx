@@ -49,7 +49,7 @@ const MultiFileUpload = () => {
   return (    
     <div>
       <div {...getRootProps()} className="dropzone">
-        <input {...getInputProps()} />
+      <input {...getInputProps({ accept: 'image/*, application/pdf, .doc, .docx' })} />
         {isDragActive ? (
           <p>Drop the files here ...</p>
         ) : (
