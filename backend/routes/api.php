@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,6 @@ Route::get('/pdf/{fileName}', function ($fileName) {
 });
 Route::delete('/uploaded-documents/{document}', [FileUploadController::class, 'deleteDocument']);
 Route::delete('/uploaded-documents', [FileUploadController::class, 'deleteAllDocuments']);
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store']);
