@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->json('uploaded_documents');
+            $table->string('uploaded_documents');
             $table->string('selected_color');
             $table->string('selected_orientation');
             $table->string('selected_printing_mode');

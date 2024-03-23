@@ -113,13 +113,33 @@ const Order = () => {
   };
 
   const checkout = () => {
+    const quantity = Object.values(counts).reduce((acc, count) => acc + count, 0);
+    const pricePerPage = getProductPrice(); 
+    const totalPrice = quantity * pricePerPage;
+  
     const orderDetails = {
-      uploadedDocuments,
-      selectedColor,
-      selectedOrientation,
-      selectedPrintingMode,
+      uploaded_documents: 'uploaded Documents',
+      selected_color: selectedColor,
+      selected_orientation: selectedOrientation,
+      selected_printing_mode: selectedPrintingMode,
+      quantity: quantity,
+      price_per_page: pricePerPage,
+      total_price: totalPrice,
+      payment_method: 'credit_card', 
+      payment_status: 'pending' 
     };
-  }
+  
+    axiosClient.post('/order', orderDetails)
+      .then(response => {
+        window.location.href = '/print'; 
+        console.log(response.data.message);
+      })
+      .catch(error => {
+        console.error('Error creating order:', error);
+      });
+  };
+  
+  
   
   
   return (
@@ -186,7 +206,7 @@ const Order = () => {
               </div>
               <div className="total-amount">RM {Object.values(counts).reduce((acc, count) => acc + count * getProductPrice(), 0).toFixed(2)}</div>
             </div>
-            <button className="checkout-button" >
+            <button className="checkout-button" onClick={checkout} >
               <img src={next} alt="checkout button" />
             </button>
           </div>

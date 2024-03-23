@@ -41,4 +41,5 @@ Route::delete('/uploaded-documents', [FileUploadController::class, 'deleteAllDoc
 Route::get('/products', [ProductController::class, 'index']);
 Route::post('/products', [ProductController::class, 'store']);
 
+
 Route::post('/order', [OrderController::class, 'store']);

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
+
 
 class OrderController extends Controller
 {
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'uploaded_documents' => 'required|array',
+            'uploaded_documents' => 'required|string',
             'selected_color' => 'required|string',
             'selected_orientation' => 'required|string',
             'selected_printing_mode' => 'required|string',
