@@ -7,14 +7,16 @@ import cancelBtn from '../assets/cancel.png';
 import next from '../assets/next.png';
 import logo from '../assets/logo.png';
 
+
 const Order = () => {
   const [uploadedDocuments, setUploadedDocuments] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [counts, setCounts] = useState({}); 
-
   const [products, setProducts] = useState([]);
   const [selectedColor, setSelectedColor] = useState('bw');
+  const [selectedOrientation, setSelectedOrientation] = useState('landscape');
+  const [selectedPrintingMode, setSelectedPrintingMode] = useState('single');
 
   useEffect(() => {
     axiosClient.get('/uploaded-documents')
@@ -103,21 +105,23 @@ const Order = () => {
  
   const getProductPrice = () => {
     console.log('Selected Color:', selectedColor);
-    console.log('Products:', products);
     const selectedProduct = products.find(product => product.color.toLowerCase() === selectedColor.toLowerCase());
-    console.log('Selected Product:', selectedProduct);
     if (selectedProduct) {
       return selectedColor.toLowerCase() === 'bw' ? selectedProduct.price : selectedProduct.price;
     }
     return 0;
   };
-  
-  
-  
-  
-  
-  
 
+  const checkout = () => {
+    const orderDetails = {
+      uploadedDocuments,
+      selectedColor,
+      selectedOrientation,
+      selectedPrintingMode,
+    };
+  }
+  
+  
   return (
     <div>
       <BackgroundAnimation/>
@@ -163,13 +167,13 @@ const Order = () => {
             </select>
 
             <label htmlFor="color-option">Orientation</label>
-            <select id="orientation-option" name="orientation-option">
+            <select id="orientation-option" name="orientation-option" value={selectedOrientation} onChange={(e) => setSelectedOrientation(e.target.value)}>
               <option value="landscape">Landscape</option>
               <option value="portrait">Portrait</option>
             </select>
 
             <label htmlFor="duplex-option">Printing mode</label>
-            <select id="printing-mode" name="printing-mode">
+            <select id="printing-mode" name="printing-mode" value={selectedPrintingMode} onChange={(e) => setSelectedPrintingMode(e.target.value)}>
               <option value="single">Single side</option>
               <option value="duplex">Double side</option>
             </select>
@@ -182,7 +186,7 @@ const Order = () => {
               </div>
               <div className="total-amount">RM {Object.values(counts).reduce((acc, count) => acc + count * getProductPrice(), 0).toFixed(2)}</div>
             </div>
-            <button className="checkout-button">
+            <button className="checkout-button" >
               <img src={next} alt="checkout button" />
             </button>
           </div>

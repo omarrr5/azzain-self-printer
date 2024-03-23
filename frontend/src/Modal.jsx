@@ -6,7 +6,7 @@ const Modal = ({ closeModal, documentFileName }) => {
     <div className="modal">
       <div className="modal-content">
         <span className="close" onClick={closeModal}>&times;</span>
-        <PDFViewer documentFileName={documentFileName} />
+        <PDFViewer documentFileName={documentFileName}  />
       </div>
     </div>
   );
