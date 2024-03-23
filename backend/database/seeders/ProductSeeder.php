@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'A4 paper',
             'price' => 0.30,
-            'color' => 'colored',
+            'color' => 'color',
             'quantity' => '400'
         ]);
     }

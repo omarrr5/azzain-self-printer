@@ -13,6 +13,9 @@ const Order = () => {
   const [showModal, setShowModal] = useState(false);
   const [counts, setCounts] = useState({}); 
 
+  const [products, setProducts] = useState([]);
+  const [selectedColor, setSelectedColor] = useState('bw');
+
   useEffect(() => {
     axiosClient.get('/uploaded-documents')
       .then(response => {
@@ -25,6 +28,14 @@ const Order = () => {
       })
       .catch(error => {
         console.error('Error fetching uploaded documents:', error);
+      });
+
+    axiosClient.get('/products')
+      .then(response => {
+        setProducts(response.data.products);
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
       });
   }, []);
 
@@ -51,7 +62,6 @@ const Order = () => {
       [documentId]: prevCounts[documentId] ? prevCounts[documentId] + 1 : 1,
     }));
   };
-
 
   const deleteDocument = (documentName) => {
     axiosClient.delete(`/uploaded-documents/${documentName}`)
@@ -89,6 +99,23 @@ const Order = () => {
       window.location.href = '/'; 
     });
   };
+
+ 
+  const getProductPrice = () => {
+    console.log('Selected Color:', selectedColor);
+    console.log('Products:', products);
+    const selectedProduct = products.find(product => product.color.toLowerCase() === selectedColor.toLowerCase());
+    console.log('Selected Product:', selectedProduct);
+    if (selectedProduct) {
+      return selectedColor.toLowerCase() === 'bw' ? selectedProduct.price : selectedProduct.price;
+    }
+    return 0;
+  };
+  
+  
+  
+  
+  
   
 
   return (
@@ -114,7 +141,7 @@ const Order = () => {
                 <div className="btn" onClick={() => incrementCount(document.name)}>+</div>
               </div>
               <div className="prices">
-                <div className="amount">RM {(counts[document.name] * 0.15).toFixed(2)}</div>
+                <div className="amount">RM {(counts[document.name] * getProductPrice()).toFixed(2)}</div>
                 <div className="remove">
                   <button onClick={() => deleteDocument(document.name)}><img src={deleteBtn} alt="delete button" /></button>
                 </div>
@@ -128,9 +155,9 @@ const Order = () => {
         )}
 
         <div className='options-container'>
-        <div className='label-select-container'>
+          <div className='label-select-container'>
             <label htmlFor="color-option">Color option</label>
-            <select id="color-option" name="color-option">
+            <select id="color-option" name="color-option" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
               <option value="bw">Black and White</option>
               <option value="color">Color</option>
             </select>
@@ -153,7 +180,7 @@ const Order = () => {
                 <div className="Subtotal">Sub-Total</div>
                 <div className="items">{uploadedDocuments.length} items</div>
               </div>
-              <div className="total-amount">RM {Object.values(counts).reduce((acc, count) => acc + count * 0.15, 0).toFixed(2)}</div>
+              <div className="total-amount">RM {Object.values(counts).reduce((acc, count) => acc + count * getProductPrice(), 0).toFixed(2)}</div>
             </div>
             <button className="checkout-button">
               <img src={next} alt="checkout button" />

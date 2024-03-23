@@ -22,9 +22,12 @@ class ProductController extends Controller
             'quantity' => 'required|string'
         ]);
 
+        $price = (float) $request->price;
+
+
         $product = Product::create([
             'name' => $request->name,
-            'price' => $request->price,
+            'price' => $price,
             'color' => $request->color,
             'quantity' => $request->quantity
         ]);
