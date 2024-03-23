@@ -25,7 +25,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/upload', [FileUploadController::class, 'upload']);
 Route::get('/uploaded-documents', [FileUploadController::class, 'getUploadedDocuments']);
-
 Route::get('/pdf/{fileName}', function ($fileName) {
     $filePath = storage_path('app/uploads/' . $fileName);
     if (file_exists($filePath)) {
@@ -35,3 +34,4 @@ Route::get('/pdf/{fileName}', function ($fileName) {
     }
 });
 Route::delete('/uploaded-documents/{document}', [FileUploadController::class, 'deleteDocument']);
+Route::delete('/uploaded-documents', [FileUploadController::class, 'deleteAllDocuments']);

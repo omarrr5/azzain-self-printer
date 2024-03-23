@@ -57,4 +57,15 @@ class FileUploadController extends Controller
     }
 }
 
+public function deleteAllDocuments()
+{
+    try {
+        Storage::deleteDirectory('uploads');
+
+        return response()->json(['message' => 'All documents deleted successfully'], 200);
+    } catch (Exception $e) {
+        return response()->json(['error' => 'Failed to delete documents'], 500);
+    }
+}
+
 }

@@ -69,6 +69,28 @@ const Order = () => {
       });
   };
 
+  const deleteAllDocuments = (callback) => {
+    axiosClient.delete('/uploaded-documents')
+      .then(() => {
+        setUploadedDocuments([]);
+        setCounts({});
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting documents:', error);
+      });
+  };
+  
+
+  const handleCancel = () => {
+    deleteAllDocuments(() => {
+      window.location.href = '/'; 
+    });
+  };
+  
+
   return (
     <div>
       <BackgroundAnimation/>
@@ -76,7 +98,7 @@ const Order = () => {
         <div className="cart">
           <div className='Header'>
             <h3>Your Documents</h3>
-            <button className='Action'><img src={cancelBtn} alt="cancel button" /></button>
+            <button className='Action' onClick={handleCancel}><img src={cancelBtn} alt="cancel button" /></button>
           </div>
           {uploadedDocuments.map((document, index) => (
             <div key={index} className="Cart-Items">
