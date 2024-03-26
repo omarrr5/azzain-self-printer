@@ -140,8 +140,6 @@ const Order = () => {
   };
   
   
-  
-  
   return (
     <div>
       <BackgroundAnimation/>

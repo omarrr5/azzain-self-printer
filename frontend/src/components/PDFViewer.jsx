@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosClient from '../axios-client';
+import docxLogo from '../assets/docx-logo.png'; 
 
 const PDFViewer = ({ documentFileName }) => {
   const [fileType, setFileType] = useState('');
@@ -25,6 +26,13 @@ const PDFViewer = ({ documentFileName }) => {
     event.preventDefault(); 
   };
 
+  const handleDownload = event => {
+    if (fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      event.preventDefault();
+      console.log('Automatic download disabled for DOCX files');
+    }
+  };
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -34,14 +42,24 @@ const PDFViewer = ({ documentFileName }) => {
       {fileType.startsWith('image/') ? ( 
         <img src={fileUrl} alt="Document" style={{ maxWidth: '100%', height: 'auto' }} />
       ) : (
-        <iframe
-          src={`${fileUrl}#toolbar=0`}
-          width="100%"
-          height="600px"
-          title="PDF Viewer"
-          frameBorder="0"
-          onContextMenu={handleContextMenu} 
-        />
+        <div>
+          {fileType === 'application/pdf' ? (
+            <iframe
+              src={`${fileUrl}#toolbar=0`}
+              width="100%"
+              height="600px"
+              title="PDF Viewer"
+              frameBorder="0"
+              onContextMenu={handleContextMenu}
+              onLoad={handleDownload} 
+            />
+          ) : (
+            <div>
+              <img src={docxLogo} alt="DOCX File"height="400px"/>
+              <p>DOCX files cannot be displayed.</p>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
